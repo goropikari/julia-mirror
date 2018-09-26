@@ -116,7 +116,8 @@ def download(url, path_or_filename=None, logging_file=None, logging_level=loggin
             urllib.request.urlretrieve(url, f.name)
             if os.path.isfile(filename):
                 os.unlink(filename)
-            os.rename(f.name, filename)
+            # os.rename(f.name, filename)
+            shutil.move(f.name, filename)
             os.chmod(filename, 0o644)
             i = 4
         except urllib.request.HTTPError as e:
@@ -315,7 +316,8 @@ def clone_from(url, to, mirror=False, shallow=True):
         repo = git.Repo.clone_from(url, tempdir, depth=1, shallow_submodules=True)
     else:
         repo = git.Repo.clone_from(url, tempdir)
-    os.rename(tempdir, to)
+    # os.rename(tempdir, to)
+    shutil.move(tempdir, to)
     return repo
 
 
